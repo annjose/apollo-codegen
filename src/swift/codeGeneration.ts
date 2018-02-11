@@ -752,8 +752,8 @@ export class SwiftAPIGenerator extends SwiftGenerator<CompilerContext> {
           `case ${escapeIdentifierIfNeeded(this.helpers.enumCaseName(value.name))}`
         );
       });
-      this.comment('Auto generated constant for unknown enum values');
-      this.printOnNewline('case unknown(RawValue)');
+      this.comment('Auto generated constant for __unknown enum values');
+      this.printOnNewline('case __unknown(RawValue)');
 
       this.printNewlineIfNeeded();
       this.printOnNewline('public init?(rawValue: RawValue)');
@@ -765,7 +765,7 @@ export class SwiftAPIGenerator extends SwiftGenerator<CompilerContext> {
               `case "${value.value}": self = ${escapeIdentifierIfNeeded(this.helpers.enumDotCaseName(value.name))}`
             );
           });
-          this.printOnNewline(`default: self = .unknown(rawValue)`);
+          this.printOnNewline(`default: self = .__unknown(rawValue)`);
         });
       });
 
@@ -779,7 +779,7 @@ export class SwiftAPIGenerator extends SwiftGenerator<CompilerContext> {
               `case ${escapeIdentifierIfNeeded(this.helpers.enumDotCaseName(value.name))}: return "${value.value}"`
             );
           });
-          this.printOnNewline(`case .unknown(let value): return value`);
+          this.printOnNewline(`case .__unknown(let value): return value`);
         });
       });
 
@@ -795,7 +795,7 @@ export class SwiftAPIGenerator extends SwiftGenerator<CompilerContext> {
               `case ${tuple}: return true`
             );
           });
-          this.printOnNewline(`case (.unknown(let lhsValue), .unknown(let rhsValue)): return lhsValue == rhsValue`);
+          this.printOnNewline(`case (.__unknown(let lhsValue), .__unknown(let rhsValue)): return lhsValue == rhsValue`);
           this.printOnNewline(`default: return false`);
         });
       });
